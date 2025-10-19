@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informatika - Kelas IX</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #eef7ff;
+    color: #003366;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  h1, h2 {
+    text-align: center;
+    color: #004080;
+    margin: 10px 0;
+  }
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  .question {
+    background: #f9f9f9;
+    border-left: 5px solid #007acc;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 15px;
+  }
+
+  .question p {
+    margin: 0 0 8px;
+  }
+
+  label input {
+    margin-right: 6px;
+  }
+
+  .btn {
+    background-color: #007acc;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    font-size: 16px;
+  }
+
+  .btn:hover {
+    background-color: #005fa3;
+  }
+
+  .result {
+    text-align: center;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  /* 🔹 Responsif untuk layar kecil */
+  @media (max-width: 600px) {
+    .container {
+      padding: 15px;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    h1 {
+      font-size: 1.4em;
+    }
+    h2 {
+      font-size: 1.1em;
+    }
+    .btn {
+      font-size: 15px;
+      padding: 10px;
+    }
+    .question {
+      font-size: 14px;
+    }
+    input[type="text"] {
+      font-size: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Informatika Kelas IX</h1>
+  <h2>Integrasi Konten Aplikasi Perkantoran</h2>
+
+  <label>Nama:</label>
+  <input type="text" id="name" placeholder="Masukkan nama lengkap" required>
+
+  <label>Kelas:</label>
+  <input type="text" id="klas" placeholder="Contoh: IX-A" required>
+
+  <form id="quizForm"></form>
+
+  <button class="btn" onclick="submitQuiz()">Koreksi & Kirim ke Spreadsheet</button>
+  <div id="result" class="result"></div>
+</div>
+
+<script>
+  // === Ganti dengan URL Web App milik Anda ===
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvcmxYrPBooUT8uaFJfBB8PLZWZRWWatSV_EPsolbIvYNeeSK_Yk6kNAiH9Cfk5IJY/exec";
+
+  // === Soal ===
+  const questions = [
+    {q:"1. Aplikasi perkantoran digunakan untuk membuat dokumen seperti surat dan laporan. Contoh aplikasinya adalah ...", options:["Adobe Premiere","Microsoft Office","CorelDraw","Blender"], answer:"Microsoft Office"},
+    {q:"2. Aplikasi yang digunakan untuk mengolah teks disebut ...", options:["Spreadsheet","Presentation Processor","Word Processor","Graphic Editor"], answer:"Word Processor"},
+    {q:"3. Contoh aplikasi pengolah kata adalah ...", options:["Microsoft Excel","Microsoft Word","Microsoft PowerPoint","Paint"], answer:"Microsoft Word"},
+    {q:"4. Aplikasi untuk mengolah angka dan grafik adalah ...", options:["PowerPoint","Word","Excel","Paint"], answer:"Excel"},
+    {q:"5. Aplikasi presentasi digunakan untuk ...", options:["Mengedit foto","Menampilkan ringkasan dalam bentuk slide","Mengetik laporan","Membuat tabel"], answer:"Menampilkan ringkasan dalam bentuk slide"},
+    {q:"6. Google Slides termasuk contoh aplikasi ...", options:["Stand-alone","Cloud-based","Offline","Desktop"], answer:"Cloud-based"},
+    {q:"7. Keunggulan aplikasi cloud-based adalah ...", options:["Hanya bisa di komputer pribadi","Tidak butuh internet","Dapat dikerjakan bersama secara real-time","Tidak bisa menyimpan otomatis"], answer:"Dapat dikerjakan bersama secara real-time"},
+    {q:"8. Integrasi konten antar aplikasi berarti ...", options:["Menghapus data antar aplikasi","Memadukan hasil kerja dari beberapa aplikasi","Menggunakan satu aplikasi saja","Menyalin file biasa"], answer:"Memadukan hasil kerja dari beberapa aplikasi"},
+    {q:"9. Contoh integrasi konten adalah ...", options:["Mengetik di Word dan mencetaknya","Membuat tabel di Excel lalu menyalinnya ke Word","Membuka file Word di PowerPoint","Menyimpan file di folder"], answer:"Membuat tabel di Excel lalu menyalinnya ke Word"},
+    {q:"10. Aplikasi legal artinya ...", options:["Aplikasi bajakan","Gratis tanpa izin","Berlisensi resmi atau gratis legal","Tidak bisa diperbarui"], answer:"Berlisensi resmi atau gratis legal"},
+    {q:"11. Aplikasi pengolah gambar disebut juga ...", options:["Graphic Editor","Word Processor","Spreadsheet","Presentation"], answer:"Graphic Editor"},
+    {q:"12. Contoh aplikasi pengolah gambar adalah ...", options:["Excel","Paint","Word","PowerPoint"], answer:"Paint"},
+    {q:"13. Aplikasi stand-alone biasanya diinstal di ...", options:["Komputer","Internet","Ponsel","Server cloud"], answer:"Komputer"},
+    {q:"14. Sebelum membuat dokumen, kita perlu melakukan ... konten.", options:["Analisis","Evaluasi","Instalasi","Desain"], answer:"Analisis"},
+    {q:"15. Analisis konten bertujuan menentukan ... dan ... dokumen.", options:["Tujuan, pembaca","Warna, ukuran","Jenis, lokasi","Aplikasi, format"], answer:"Tujuan, pembaca"},
+    {q:"16. Laporan teks sebaiknya dibuat dengan aplikasi ...", options:["PowerPoint","Word","Excel","Paint"], answer:"Word"},
+    {q:"17. Data keuangan lebih sesuai dibuat di ...", options:["PowerPoint","Excel","Word","Google Docs"], answer:"Excel"},
+    {q:"18. Presentasi sebaiknya dibuat menggunakan ...", options:["Word","Excel","PowerPoint","Google Docs"], answer:"PowerPoint"},
+    {q:"19. Contoh aplikasi perkantoran berbasis cloud adalah ...", options:["Google Docs","Notepad","CorelDraw","Paint"], answer:"Google Docs"},
+    {q:"20. Menggunakan software legal menunjukkan sikap ... dan ... digital.", options:["Integritas, kejujuran","Curang, kreatif","Santai, aman","Murah, cepat"], answer:"Integritas, kejujuran"}
+  ];
+
+  const form = document.getElementById("quizForm");
+  questions.forEach((item, i) => {
+    const div = document.createElement("div");
+    div.classList.add("question");
+    div.innerHTML = `
+      <p>${item.q}</p>
+      ${item.options.map(opt =>
+        `<label><input type="radio" name="q${i}" value="${opt}"> ${opt}</label><br>`
+      ).join('')}
+    `;
+    form.appendChild(div);
+  });
+
+  async function submitQuiz() {
+    const name = document.getElementById("name").value.trim();
+    const klas = document.getElementById("klas").value.trim();
+    const resultDiv = document.getElementById("result");
+
+    if (!name || !klas) {
+      alert("Nama dan kelas harus diisi!");
+      return;
+    }
+
+    let score = 0;
+    const answers = {};
+    questions.forEach((item, i) => {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      const ans = selected ? selected.value : "";
+      answers[`q${i+1}`] = ans;
+      if (ans === item.answer) score++;
+    });
+
+    const total = questions.length;
+    const percent = ((score / total) * 100).toFixed(0);
+    const passed = percent >= 75 ? "LULUS ✅" : "BELUM LULUS ❌";
+    resultDiv.innerHTML = `Skor Anda: ${score}/${total} (${percent}%) - ${passed}`;
+
+    const data = { name, klas, score, total, percent, passed, answers };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      alert("✅ Data berhasil dikirim ke Spreadsheet!");
+      // Reset form
+      document.getElementById("name").value = "";
+      document.getElementById("klas").value = "";
+      document.querySelectorAll("input[type=radio]").forEach(r => r.checked = false);
+      resultDiv.innerHTML = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (err) {
+      console.error("Gagal mengirim:", err);
+      alert("❌ Terjadi kesalahan saat mengirim data!");
+    }
+  }
+</script>
+</body>
+</html>
